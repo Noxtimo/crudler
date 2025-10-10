@@ -1,11 +1,14 @@
-import { Text } from 'react-native';
 import Screen from '../layouts/Screen';
+import ModuleView from '../entity/modules/ModuleView';
 
-export default function ModuleViewScreen() {
+export default function ModuleViewScreen({ route }) {
+  // Initialisations ---------------------
+  const { module } = route.params;
+
+  // Return ------------------------------
   return (
     <Screen>
-      <Text>View</Text>
+      <ModuleView module={module} />
     </Screen>
   );
 }
- 
