@@ -1,21 +1,50 @@
-import { StatusBar } from 'expo-status-bar';
-import { StyleSheet, Text, View } from 'react-native';
+import { NavigationContainer } from '@react-navigation/native';
+import { createNativeStackNavigator } from '@react-navigation/native-stack';
+import ModuleListScreen from './src/components/screens/ModuleListScreen';
+import ModuleAddScreen from './src/components/screens/ModuleAddScreen';
+import ModuleViewScreen from './src/components/screens/ModuleViewScreen';
+import ModuleModifyScreen from './src/components/screens/ModuleModifyScreen';
 
-export default function App() {
+const Stack = createNativeStackNavigator();
+
+export const App = () => {
+  // Initialisations ---------------------
+  // State -------------------------------
+  // Handlers ----------------------------
+  // View --------------------------------
   return (
-    <View style={styles.container}>
-      <Text>Test app</Text>
-      <StatusBar style="auto" />
-    </View>
+    <NavigationContainer>
+      <Stack.Navigator
+        initialRouteName='ModuleListScreen'
+        screenOptions={{
+          headerStyle: { backgroundColor: '#000' },
+          headerTintColor: '#fff',
+          headerTitleStyle: { color: '#fff' },
+        }}
+      >
+        <Stack.Screen
+          name='ModuleListScreen'
+          component={ModuleListScreen}
+          options={{ title: 'List modules' }}
+        />
+        <Stack.Screen
+          name='ModuleAddScreen'
+          component={ModuleAddScreen}
+          options={{ title: 'Add module' }}
+        />
+        <Stack.Screen
+          name='ModuleViewScreen'
+          component={ModuleViewScreen}
+          options={{ title: 'View module' }}
+        />
+        <Stack.Screen
+          name='ModuleModifyScreen'
+          component={ModuleModifyScreen}
+          options={{ title: 'Modify module' }}
+        />
+      </Stack.Navigator>
+    </NavigationContainer>
   );
-}
+};
 
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: '#fff',
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-  
-});
+export default App;
