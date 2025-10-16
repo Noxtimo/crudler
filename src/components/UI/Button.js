@@ -1,8 +1,9 @@
 import { Text, Pressable, StyleSheet, View } from 'react-native';
 
-export const Button = ({ label, onClick }) => {
+export const Button = ({ label, onClick, icon }) => {
   return (
     <Pressable onPress={onClick} style={styles.button}>
+      {icon && icon}
       <Text style={styles.label}>{label}</Text>
     </Pressable>
   );
@@ -23,6 +24,8 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     padding: 3,
     flex: 1,
+    flexDirection: 'row',
+    gap: 5,
   },
   label: {
     fontSize: 16,

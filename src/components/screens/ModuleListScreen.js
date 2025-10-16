@@ -3,6 +3,8 @@ import { LogBox } from 'react-native';
 import Screen from '../layouts/Screen';
 import { modules as initialModules } from '../../data/modules';
 import ModuleList from '../entity/modules/ModuleList';
+import Icons from '../UI/Icons';
+import { Button, ButtonTray } from '../UI/Button';
 
 export default function ModuleListScreen({ navigation }) {
   // Initialisations ---------------------
@@ -15,8 +17,15 @@ export default function ModuleListScreen({ navigation }) {
     navigation.goBack();
   };
 
+  const onAdd = (module) => {
+    handleAdd(module);
+    navigation.goBack();
+  };
+
   // Handlers ----------------------------
-  const handleSelect = (module) => navigation.navigate('ModuleViewScreen', { module, onDelete });
+  const handleAdd = (module) => setModules([...modules, module]);
+
+  const gotoViewScreen = (module) => navigation.navigate('ModuleViewScreen', { module, onDelete });
 
   const handleDelete = (module) => {
     const newModules = modules.filter((item) => item.id !== module.id);
@@ -24,9 +33,14 @@ export default function ModuleListScreen({ navigation }) {
     console.log(`After deleting ${module.name}, modules length is ${newModules.length}`);
   };
 
+  const gotoAddScreen = () => navigation.navigate('ModuleAddScreen', { onAdd });
+
   return (
     <Screen>
-      <ModuleList modules={modules} onSelect={handleSelect} />
+      <ButtonTray>
+        <Button label='Add' icon={<Icons.Add />} onClick={gotoAddScreen} />
+      </ButtonTray>
+      <ModuleList modules={modules} onSelect={gotoViewScreen} />
     </Screen>
   );
 }
