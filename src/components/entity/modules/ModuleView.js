@@ -2,7 +2,7 @@ import { StyleSheet, View, Text } from 'react-native';
 import FullWidthImage from 'react-native-fullwidth-image';
 import { Button, ButtonTray } from '../../UI/Button';
 
-export default function ModuleView({ module }) {
+export default function ModuleView({ module, onDelete }) {
   return (
     <View style={styles.container}>
       <FullWidthImage source={{ uri: module.ModuleImage }} style={styles.image} />
@@ -17,7 +17,7 @@ export default function ModuleView({ module }) {
       </View>
       <ButtonTray>
         <Button label='Modify' />
-        <Button label='Delete' />
+        <Button label='Delete' onClick={onDelete} />
       </ButtonTray>
     </View>
   );
