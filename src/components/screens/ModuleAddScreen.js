@@ -1,8 +1,8 @@
 import { useState } from 'react';
-import { View, Text, TextInput, StyleSheet } from 'react-native';
 import Screen from '../layouts/Screen';
 import Icons from '../UI/Icons';
 import { Button, ButtonTray } from '../UI/Button';
+import { Form, FormItem } from '../UI/Form';
 
 const defaultModule = {
   ModuleID: null,
@@ -32,52 +32,33 @@ export default function ModuleAddScreen({ navigation, route }) {
   // View --------------------------------
   return (
     <Screen>
-      <View style={styles.container}>
-        <View style={styles.item}>
-          <Text style={styles.itemLabel}>Module code</Text>
-          <TextInput
-            value={module.ModuleCode}
-            onChangeText={(value) => handleChange('ModuleCode', value)}
-            style={styles.itemTextInput}
-          />
-        </View>
-
-        <View style={styles.item}>
-          <Text style={styles.itemLabel}>Module name</Text>
-          <TextInput
-            value={module.ModuleName}
-            onChangeText={(value) => handleChange('ModuleName', value)}
-            style={styles.itemTextInput}
-          />
-        </View>
-
-        <View style={styles.item}>
-          <Text style={styles.itemLabel}>Module level</Text>
-          <TextInput
-            value={module.ModuleLevel}
-            onChangeText={(value) => handleChange('ModuleLevel', value)}
-            style={styles.itemTextInput}
-          />
-        </View>
-
-        <View style={styles.item}>
-          <Text style={styles.itemLabel}>Module leader</Text>
-          <TextInput
-            value={module.ModuleLeaderName}
-            onChangeText={(value) => handleChange('ModuleLeaderName', value)}
-            style={styles.itemTextInput}
-          />
-        </View>
-
-        <View style={styles.item}>
-          <Text style={styles.itemLabel}>Module image URL</Text>
-          <TextInput
-            value={module.ModuleImage}
-            onChangeText={(value) => handleChange('ModuleImage', value)}
-            style={styles.itemTextInput}
-          />
-        </View>
-      </View>
+      <Form>
+        <FormItem
+          label='Module code'
+          value={module.ModuleCode}
+          onChangeText={(value) => handleChange('ModuleCode', value)}
+        />
+        <FormItem
+          label='Module name'
+          value={module.ModuleName}
+          onChangeText={(value) => handleChange('ModuleName', value)}
+        />
+        <FormItem
+          label='Module level'
+          value={module.ModuleLevel}
+          onChangeText={(value) => handleChange('ModuleLevel', value)}
+        />
+        <FormItem
+          label='Module leader'
+          value={module.ModuleLeaderName}
+          onChangeText={(value) => handleChange('ModuleLeaderName', value)}
+        />
+        <FormItem
+          label='Module image URL'
+          value={module.ModuleImage}
+          onChangeText={(value) => handleChange('ModuleImage', value)}
+        />
+      </Form>
 
       <ButtonTray>
         <Button label='Add' icon={<Icons.Add />} onClick={handleAdd} />
@@ -86,23 +67,3 @@ export default function ModuleAddScreen({ navigation, route }) {
     </Screen>
   );
 }
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    padding: 16,
-  },
-  item: {
-    marginBottom: 16,
-  },
-  itemLabel: {
-    fontWeight: 'bold',
-    marginBottom: 8,
-  },
-  itemTextInput: {
-    borderWidth: 1,
-    borderColor: '#ccc',
-    borderRadius: 4,
-    padding: 8,
-  },
-});
