@@ -7,25 +7,36 @@ import ModuleViewScreen from './src/components/screens/ModuleViewScreen';
 import ModuleModifyScreen from './src/components/screens/ModuleModifyScreen';
 import { api } from './src/api/api';
 import { useLoad } from './src/hooks/useLoad';
+import { storage } from './src/utils/storage';
 
 const Stack = createNativeStackNavigator();
+const MODULES_KEY = 'modules';
 
 export const App = () => {
   // Initialisations ---------------------
-  const { loading, data: modules, setData: setModules, loadData: reloadModules } = useLoad(api.get);
+  const { loading, data: modules, setData: setModules, loadData: reloadModules } = useLoad(async () => {
+    const storedModules = await storage.get(MODULES_KEY);
+    return storedModules || api.get();
+  });
 
   // Handlers ----------------------------
   const handleAdd = async (module) => {
-    await api.post(module);
-    await reloadModules();
+    const newModule = await api.post(module);
+    const newModules = [...modules, newModule];
+    setModules(newModules);
+    await storage.store(MODULES_KEY, newModules);
   };
   const handleDelete = async (module) => {
     await api.delete(module.ModuleID);
-    await reloadModules();
+    const newModules = modules.filter((item) => item.ModuleID !== module.ModuleID);
+    setModules(newModules);
+    await storage.store(MODULES_KEY, newModules);
   };
   const handleModify = async (module) => {
-    await api.put(module);
-    await reloadModules();
+    const modifiedModule = await api.put(module);
+    const newModules = modules.map((item) => (item.ModuleID === modifiedModule.ModuleID ? modifiedModule : item));
+    setModules(newModules);
+    await storage.store(MODULES_KEY, newModules);
   };
 
   // View --------------------------------
