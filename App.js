@@ -12,20 +12,20 @@ const Stack = createNativeStackNavigator();
 
 export const App = () => {
   // Initialisations ---------------------
-  const { loading, data: modules, setData: setModules } = useLoad(api.get);
+  const { loading, data: modules, setData: setModules, loadData: reloadModules } = useLoad(api.get);
 
   // Handlers ----------------------------
   const handleAdd = async (module) => {
-    const newModule = await api.post(module);
-    setModules([...modules, newModule]);
+    await api.post(module);
+    await reloadModules();
   };
   const handleDelete = async (module) => {
     await api.delete(module.ModuleID);
-    setModules(modules.filter((item) => item.ModuleID !== module.ModuleID));
+    await reloadModules();
   };
   const handleModify = async (module) => {
-    const modifiedModule = await api.put(module);
-    setModules(modules.map((item) => (item.ModuleID === modifiedModule.ModuleID ? modifiedModule : item)));
+    await api.put(module);
+    await reloadModules();
   };
 
   // View --------------------------------
