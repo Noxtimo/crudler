@@ -1,30 +1,22 @@
-import React from 'react';
 import { View, Text, StyleSheet } from 'react-native';
 
-const ModuleItem = ({ module }) => {
+export default function ModuleItem({ module }) {
   return (
-    <View style={styles.container}>
-      <Text style={styles.title}>{module.title}</Text>
-      <Text style={styles.lecturer}>{module.lecturer}</Text>
+    <View style={styles.item}>
+      <Text style={styles.itemText}>
+        {module.ModuleCode} {module.ModuleName}
+      </Text>
     </View>
   );
-};
+}
 
 const styles = StyleSheet.create({
-  container: {
-    padding: 10,
-    marginVertical: 5,
-    backgroundColor: '#f9f9f9',
-    borderRadius: 5,
+  item: {
+    paddingVertical: 15,
+    borderBottomWidth: 1,
+    borderColor: 'lightgray',
   },
-  title: {
-    fontSize: 18,
-    fontWeight: 'bold',
-  },
-  lecturer: {
-    fontSize: 14,
-    color: '#666',
+  itemText: {
+    fontSize: 16,
   },
 });
-
-export default ModuleItem;
