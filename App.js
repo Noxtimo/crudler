@@ -15,9 +15,18 @@ export const App = () => {
   const { loading, data: modules, setData: setModules } = useLoad(api.get);
 
   // Handlers ----------------------------
-  const handleAdd = (module) => setModules([...modules, module]);
-  const handleDelete = (module) => setModules(modules.filter((item) => item.ModuleID !== module.ModuleID));
-  const handleModify = (module) => setModules(modules.map((item) => (item.ModuleID === module.ModuleID ? module : item)));
+  const handleAdd = async (module) => {
+    const newModule = await api.post(module);
+    setModules([...modules, newModule]);
+  };
+  const handleDelete = async (module) => {
+    await api.delete(module.ModuleID);
+    setModules(modules.filter((item) => item.ModuleID !== module.ModuleID));
+  };
+  const handleModify = async (module) => {
+    const modifiedModule = await api.put(module);
+    setModules(modules.map((item) => (item.ModuleID === modifiedModule.ModuleID ? modifiedModule : item)));
+  };
 
   // View --------------------------------
   return (
