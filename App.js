@@ -1,4 +1,3 @@
-import { useState, useEffect } from 'react';
 import { ActivityIndicator, View } from 'react-native';
 import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
@@ -7,30 +6,18 @@ import ModuleAddScreen from './src/components/screens/ModuleAddScreen';
 import ModuleViewScreen from './src/components/screens/ModuleViewScreen';
 import ModuleModifyScreen from './src/components/screens/ModuleModifyScreen';
 import { api } from './src/api/api';
+import { useLoad } from './src/hooks/useLoad';
 
 const Stack = createNativeStackNavigator();
 
 export const App = () => {
   // Initialisations ---------------------
-  const [loading, setLoading] = useState(true);
-
-  // State -------------------------------
-  const [modules, setModules] = useState([]);
+  const { loading, data: modules, setData: setModules } = useLoad(api.get);
 
   // Handlers ----------------------------
   const handleAdd = (module) => setModules([...modules, module]);
   const handleDelete = (module) => setModules(modules.filter((item) => item.ModuleID !== module.ModuleID));
   const handleModify = (module) => setModules(modules.map((item) => (item.ModuleID === module.ModuleID ? module : item)));
-
-  // Effects -----------------------------
-  useEffect(() => {
-    const fetchModules = async () => {
-      const data = await api.get();
-      setModules(data);
-      setLoading(false);
-    };
-    fetchModules();
-  }, []);
 
   // View --------------------------------
   return (
